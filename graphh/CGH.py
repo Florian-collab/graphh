@@ -291,9 +291,10 @@ class GraphHopper(object):
         d = self.geocode(address, limit=1)
         lat = d["hits"][0]["point"]["lat"]
         lng = d["hits"][0]["point"]["lng"]
-        if (lat <= 28.62707 and lat >= 28.62706)and(lng <= -80.62087 and lng >= -80.62088):
+        if abs(lat-28.62707)<0.0001 and abs(lng+80.62087)<0.0001:
             #The default coordinates when the adress is wrong is matching with Cap Canaveral
             warnings.warn("The coordinates match with Cap Canaveral, Florida\n. It can happen when the function can't find the adress",stacklevel=2)
+
 
         return lat, lng
 
@@ -360,3 +361,4 @@ class GraphHopper(object):
         dict = self.route([latlong,latlong],instructions="false",
                           elevation="true", points_encoded= "false")
         return dict["paths"][0]["points"]["coordinates"][0][2]
+
